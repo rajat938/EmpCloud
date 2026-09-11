@@ -11,9 +11,11 @@ on:
 
   workflow_dispatch:
    inputs:
-     rollback_tag: stable
-       description: "Docker image tag to rollback to (e.g. abc12345)"
-       required: false
+     rollback_tag:
+        description: "Docker image tag to rollback to (default: stable)"
+        required: true
+        default: stable
+       
 
 concurrency:
   group: deploy-${{ github.ref }}
