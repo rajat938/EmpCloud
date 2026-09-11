@@ -116,21 +116,21 @@ jobs:
 
     rollback:
      if: github.event_name == 'workflow_dispatch'           
-      runs-on: self-hosted
+     runs-on: self-hosted
       
      steps:
-     - name: Rollback deployment
+      - name: Rollback deployment
         uses: appleboy/ssh-action@v1
         with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          password: ${{ secrets.SERVER_PASSWORD }}
-          script: |
-            cd "/home/server/project/AI Model"
-            export DOCKER_USERNAME="${{ secrets.DOCKER_USERNAME }}"
-            export ROLLBACK_TAG="${{ github.event.inputs.rollback_tag }}"
+            host: ${{ secrets.SERVER_HOST }}
+            username: ${{ secrets.SERVER_USER }}
+            password: ${{ secrets.SERVER_PASSWORD }}
+            script: |
+              cd "/home/server/project/AI Model"
+              export DOCKER_USERNAME="${{ secrets.DOCKER_USERNAME }}"
+              export ROLLBACK_TAG="${{ github.event.inputs.rollback_tag }}"
 
-            echo "Rolling back to image: $DOCKER_USERNAME/asituj-ai:$ROLLBACK_TAG"
-            docker compose pull
-            docker compose up -d
-            docker image prune -f
+              echo "Rolling back to image: $DOCKER_USERNAME/asituj-ai:$ROLLBACK_TAG"
+              docker compose pull
+              docker compose up -d
+              docker image prune -f
